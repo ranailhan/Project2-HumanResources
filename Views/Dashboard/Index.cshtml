@@ -1,8 +1,139 @@
-﻿
-@{
-    ViewData["Title"] = "Index";
+﻿@{
+    ViewData["Title"] = "Dashboard";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<div class="page-header">
+    <h3 class="page-title">
+        <span class="page-title-icon bg-gradient-primary text-white me-2">
+            <i class="mdi mdi-home"></i>
+        </span> Dashboard
+    </h3>
+    <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">
+                <span>İK Yönetim Sistemi</span>
+            </li>
+        </ul>
+    </nav>
+</div>
 
+<!-- İstatistik Kartları -->
+<div class="row">
+    <div class="col-md-3 stretch-card grid-margin">
+        <div class="card bg-gradient-primary card-img-holder text-white">
+            <div class="card-body">
+                <h4 class="font-weight-normal mb-3">
+                    Toplam Çalışan <i class="mdi mdi-account-multiple mdi-24px float-end"></i>
+                </h4>
+                <h2 class="mb-5">@ViewBag.TotalEmployees</h2>
+                <h6 class="card-text">Aktif çalışan</h6>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 stretch-card grid-margin">
+        <div class="card bg-gradient-danger card-img-holder text-white">
+            <div class="card-body">
+                <h4 class="font-weight-normal mb-3">
+                    Departman <i class="mdi mdi-hospital-box mdi-24px float-end"></i>
+                </h4>
+                <h2 class="mb-5">@ViewBag.TotalDepartments</h2>
+                <h6 class="card-text">Toplam departman</h6>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 stretch-card grid-margin">
+        <div class="card bg-gradient-warning card-img-holder text-white">
+            <div class="card-body">
+                <h4 class="font-weight-normal mb-3">
+                    Onay Bekleyen <i class="mdi mdi-clock-outline mdi-24px float-end"></i>
+                </h4>
+                <h2 class="mb-5">@ViewBag.PendingLeaves</h2>
+                <h6 class="card-text">İzin istekleri</h6>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 stretch-card grid-margin">
+        <div class="card bg-gradient-success card-img-holder text-white">
+            <div class="card-body">
+                <h4 class="font-weight-normal mb-3">
+                    Aktif İzin <i class="mdi mdi-calendar-check mdi-24px float-end"></i>
+                </h4>
+                <h2 class="mb-5">@ViewBag.ActiveLeaves</h2>
+                <h6 class="card-text">Kullanımda olan izin</h6>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Tabloları -->
+<div class="row">
+    <!-- Son Eklenen Çalışanlar -->
+    <div class="col-md-6 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Son Eklenen Çalışanlar</h4>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Ad Soyad</th>
+                                <th>Departman</th>
+                                <th>Pozisyon</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (ViewBag.RecentEmployees != null)
+                            {
+                                @foreach (var emp in ViewBag.RecentEmployees)
+                                {
+                                    <tr>
+                                        <td>@emp.FirstName @emp.LastName</td>
+                                        <td>@emp.Department?.DepartmentName</td>
+                                        <td>@emp.Position?.PositionName</td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Onay Bekleyen İzinler -->
+    <div class="col-md-6 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Onay Bekleyen İzinler</h4>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Çalışan</th>
+                                <th>İzin Türü</th>
+                                <th>Tarih</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (ViewBag.PendingLeavesList != null)
+                            {
+                                @foreach (var leave in ViewBag.PendingLeavesList)
+                                {
+                                    <tr>
+                                        <td>@leave.Employee?.FirstName @leave.Employee?.LastName</td>
+                                        <td>@leave.LeaveType?.LeaveTypeName</td>
+                                        <td>@leave.StartDate?.ToString("dd.MM.yyyy")</td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
