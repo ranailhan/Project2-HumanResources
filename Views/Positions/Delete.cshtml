@@ -1,0 +1,49 @@
+﻿@model Position
+@{
+    ViewData["Title"] = "Pozisyon Sil";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    string GetLevelName(int? level) => level switch
+    {
+        1 => "Junior",
+        2 => "Mid",
+        3 => "Senior",
+        _ => "-"
+    };
+}
+
+<h4 class="card-title">Pozisyon Sil</h4>
+<br />
+
+<div class="row">
+    <div class="col-md-6 grid-margin stretch-card">
+        <div class="card border-danger">
+            <div class="card-body">
+                <h5 class="card-title text-danger mb-3">
+                    <i class="mdi mdi-alert-circle me-2"></i> Emin misin?
+                </h5>
+                <p class="card-text mb-4">
+                    <strong>@Model.PositionName</strong> pozisyonunu silmek üzeresin. Bu işlem geri alınamaz.
+                </p>
+
+                <div class="alert alert-warning" role="alert">
+                    <i class="mdi mdi-information-outline me-2"></i>
+                    <strong>Pozisyon Bilgileri:</strong>
+                    <ul class="mb-0 mt-2">
+                        <li>Adı: @Model.PositionName</li>
+                        <li>Seviye: @GetLevelName(Model.PositionLevel)</li>
+                    </ul>
+                </div>
+
+                <form method="post">
+                    <input type="hidden" name="PositionId" value="@Model.PositionId">
+
+                    <button type="submit" class="btn btn-gradient-danger me-2">
+                        <i class="mdi mdi-delete me-2"></i> Evet, Sil
+                    </button>
+                    <a href="/Positions/Index" class="btn btn-light">İptal</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

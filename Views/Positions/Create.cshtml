@@ -1,0 +1,37 @@
+﻿@model Position
+@{
+    ViewData["Title"] = "Yeni Pozisyon";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h4 class="card-title">Yeni Pozisyon Ekle</h4>
+<br />
+
+<div class="row">
+    <div class="col-md-8 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <form method="post">
+                    <div class="form-group">
+                        <label for="positionName">Pozisyon Adı</label>
+                        <input type="text" class="form-control" id="positionName"
+                               name="PositionName" placeholder="Pozisyon adını girin" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="positionLevel">Seviye</label>
+                        <select class="form-select" id="positionLevel" name="PositionLevel" required>
+                            <option value="">-- Seç --</option>
+                            <option value="1">Junior</option>
+                            <option value="2">Mid</option>
+                            <option value="3">Senior</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-gradient-primary me-2">Ekle</button>
+                    <a href="/Positions/Index" class="btn btn-light">İptal</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

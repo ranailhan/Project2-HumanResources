@@ -1,0 +1,49 @@
+﻿@model ICollection<Position>
+@{
+    ViewData["Title"] = "Pozisyon Listesi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{string GetLevelName(int? level) => level switch
+    {
+        1 => "Junior",
+        2 => "Mid",
+        3 => "Senior",
+        _ => "-"
+    };
+}
+<h4 class="card-title">Pozisyon Listesi</h4>
+<br />
+
+<div class="d-flex justify-content-start align-items-center mb-3 gap-2">
+    <a href="/Positions/Create" class="btn btn-gradient-primary btn-icon-text">Yeni Pozisyon Ekle</a>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Pozisyon Adı</th>
+                <th>Seviye</th>
+                <th>İşlemler</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var position in Model)
+            {
+                <tr>
+                    <td><strong>@position.PositionName</strong></td>
+                    <td>@GetLevelName(position.PositionLevel)</td>
+                    <td>
+                        <a href="/Positions/Edit/@position.PositionId" class="btn btn-sm btn-gradient-warning">
+                            <i class="mdi mdi-pencil"></i>
+                        </a>
+                        <a href="/Positions/Delete/@position.PositionId" class="btn btn-sm btn-gradient-danger">
+                            <i class="mdi mdi-delete"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
