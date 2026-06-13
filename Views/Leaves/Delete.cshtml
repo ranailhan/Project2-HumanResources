@@ -1,0 +1,44 @@
+﻿@model Leaf
+@{
+    ViewData["Title"] = "İzin Sil";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h4 class="card-title">İzin Sil</h4>
+<br />
+
+<div class="row">
+    <div class="col-md-6 grid-margin stretch-card">
+        <div class="card border-danger">
+            <div class="card-body">
+                <h5 class="card-title text-danger mb-3">
+                    <i class="mdi mdi-alert-circle me-2"></i> Emin misin?
+                </h5>
+                <p class="card-text mb-4">
+                    <strong>@Model.Employee?.FirstName @Model.Employee?.LastName</strong>
+                    adlı çalışanın izin kaydını silmek üzeresin. Bu işlem geri alınamaz.
+                </p>
+
+                <div class="alert alert-warning" role="alert">
+                    <i class="mdi mdi-information-outline me-2"></i>
+                    <strong>İzin Bilgileri:</strong>
+                    <ul class="mb-0 mt-2">
+                        <li>İzin Türü: @Model.LeaveType?.LeaveTypeName</li>
+                        <li>Başlangıç: @Model.StartDate?.ToString("dd.MM.yyyy")</li>
+                        <li>Bitiş: @Model.EndDate?.ToString("dd.MM.yyyy")</li>
+                        <li>Durum: @Model.Status</li>
+                    </ul>
+                </div>
+
+                <form method="post">
+                    <input type="hidden" name="LeaveId" value="@Model.LeaveId">
+
+                    <button type="submit" class="btn btn-gradient-danger me-2">
+                        <i class="mdi mdi-delete me-2"></i> Evet, Sil
+                    </button>
+                    <a href="/Leaves/Index" class="btn btn-light">İptal</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

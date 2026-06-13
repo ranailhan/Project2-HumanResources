@@ -1,0 +1,36 @@
+﻿@model ICollection<Department>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h4 class="card-title">Departmanlar Listesi</h4><br />
+<div class="d-flex justify-content-start align-items-center mb-3 gap-2">
+    <a href="/Departments/Create" class="btn btn-gradient-primary btn-icon-text">Yeni Departman Ekle</a>
+    <a href="/Departments/Index" class="btn btn-gradient-info btn-icon-text">Listele </a>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th> Departman Adı </th>
+            <th> Açıklama  </th>
+            <th> İşlemler </th>
+        </tr>
+    </thead>
+    <tbody>
+        
+            @foreach (var department in Model)
+            {
+            <tr>
+                <td>@department.DepartmentName</td>
+                <td>@department.Description</td>
+                <td>
+                    <a href="/Departments/Edit/@department.DepartmentId" class="edit-link"><i class="fa fa-pencil"></i></a>
+                    <a href="/Departments/Delete/@department.DepartmentId" class="delete-link"><i class="fa fa-trash-o"></i></a>
+               </td>
+            </tr>
+            }
+        
+    </tbody>
+</table>
+

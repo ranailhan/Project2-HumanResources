@@ -1,0 +1,35 @@
+﻿@model Department
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h4 class="card-title">Departman Düzenle</h4>
+<br />
+
+<div class="row">
+    <div class="col-md-8 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <form method="post">
+                    <input type="hidden" name="DepartmentId" value="@Model.DepartmentId">
+
+                    <div class="form-group">
+                        <label for="departmentName">Departman Adı</label>
+                        <input type="text" class="form-control" id="departmentName"
+                               name="DepartmentName" value="@Model.DepartmentName" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Açıklama</label>
+                        <textarea class="form-control" id="description" name="Description" rows="4">@Model.Description</textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-gradient-primary me-2">Güncelle</button>
+                    <a href="/Departments/Index" class="btn btn-light">İptal</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

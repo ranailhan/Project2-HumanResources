@@ -1,0 +1,34 @@
+﻿@model Department
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h4 class="card-title">Yeni Departman Ekle</h4>
+<br />
+
+<div class="row">
+    <div class="col-md-8 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <form method="post">
+                    <div class="form-group">
+                        <label for="departmentName">Departman Adı</label>
+                        <input type="text" class="form-control" id="departmentName"
+                               name="DepartmentName" placeholder="Departman adını girin" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Açıklama</label>
+                        <textarea class="form-control" id="description" name="Description"
+                                  rows="4" placeholder="Departman açıklaması"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-gradient-primary me-2">Ekle</button>
+                    <a href="/Departments/Index" class="btn btn-light">İptal</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

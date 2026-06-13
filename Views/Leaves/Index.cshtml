@@ -1,0 +1,66 @@
+﻿@model ICollection<Leaf>
+@{
+    ViewData["Title"] = "İzin Listesi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h4 class="card-title">İzin Listesi</h4>
+<br />
+
+<div class="d-flex justify-content-start align-items-center mb-3 gap-2">
+    <a href="/Leaves/Create" class="btn btn-gradient-primary btn-icon-text">Yeni İzin Ekle</a>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Çalışan Adı</th>
+                <th>İzin Türü</th>
+                <th>Başlangıç Tarihi</th>
+                <th>Bitiş Tarihi</th>
+                <th>Neden</th>
+                <th>Durum</th>
+                <th>İşlemler</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var leaf in Model)
+            {
+                <tr>
+                    <td>@leaf.Employee?.FirstName @leaf.Employee?.LastName</td>
+                    <td>@leaf.LeaveType?.LeaveTypeName</td>
+                    <td>@leaf.StartDate?.ToString("dd.MM.yyyy")</td>
+                    <td>@leaf.EndDate?.ToString("dd.MM.yyyy")</td>
+                    <td>@(string.IsNullOrEmpty(leaf.Reason) ? "-" : leaf.Reason)</td>
+                    <td>
+                        @if (leaf.Status == "Approved")
+                        {
+                            <span class="badge badge-gradient-success">Onaylı</span>
+                        }
+                        else if (leaf.Status == "Pending")
+                        {
+                            <span class="badge badge-gradient-warning">Beklemede</span>
+                        }
+                        else if (leaf.Status == "Rejected")
+                        {
+                            <span class="badge badge-gradient-danger">Reddedildi</span>
+                        }
+                        else
+                        {
+                            <span class="badge badge-gradient-info">@leaf.Status</span>
+                        }
+                    </td>
+                    <td>
+                        <a href="/Leaves/Edit/@leaf.LeaveId" class="btn btn-sm btn-gradient-warning">
+                            <i class="mdi mdi-pencil"></i>
+                        </a>
+                        <a href="/Leaves/Delete/@leaf.LeaveId" class="btn btn-sm btn-gradient-danger">
+                            <i class="mdi mdi-delete"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

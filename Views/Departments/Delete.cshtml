@@ -1,0 +1,33 @@
+﻿@model Department
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+h4 class="card-title">Departman Sil</h4>
+<br />
+
+<div class="row">
+    <div class="col-md-6 grid-margin stretch-card">
+        <div class="card border-danger">
+            <div class="card-body">
+                <h5 class="card-title text-danger mb-3">
+                    <i class="mdi mdi-alert-circle me-2"></i> Emin misin?
+                </h5>
+                <p class="card-text mb-4">
+                    <strong>@Model.DepartmentName</strong> departmanını silmek üzeresin. Bu işlem geri alınamaz.
+                </p>
+
+                <form method="post">
+                    <input type="hidden" name="DepartmentId" value="@Model.DepartmentId">
+
+                    <button type="submit" class="btn btn-gradient-danger me-2">
+                        <i class="mdi mdi-delete me-2"></i> Evet, Sil
+                    </button>
+                    <a href="/Departments/Index" class="btn btn-light">İptal</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
