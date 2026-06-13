@@ -23,9 +23,11 @@ public partial class Employee
 
     public int? PositionId { get; set; }
 
+    public bool? IsDeleted { get; set; }
+
     public virtual Department? Department { get; set; }
 
-    public virtual ICollection<Leaf> Leaves { get; set; } = new List<Leaf>();
+    public virtual ICollection<Leave> Leaves { get; set; } = new List<Leave>();
 
     public virtual Position? Position { get; set; }
 }

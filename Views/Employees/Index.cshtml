@@ -28,13 +28,13 @@
         @foreach (var employee in Model)
         {
             <tr>
-                <td>@employee.FirstName @employee.LastName</td>
+                <td><strong>@employee.FirstName @employee.LastName</strong></td>
                 <td>@employee.Email</td>
                 <td>@employee.Phone</td>
-                <td>@employee.Salary?.ToString("C2")</td>
-                <td>@employee.HireDate?.ToString("dd.MM.yyyy")</td>
-                <td>@employee.Department.DepartmentName</td>
-                <td>@employee.Position.PositionName</td>
+                <td>@employee.HireDate?.ToString("dd.MM.yyyy") ?? "-"</td>
+                <td>@employee.Salary?.ToString("C2") ?? "-"</td>
+                <td>@employee.Department?.DepartmentName</td>
+                <td>@employee.Position?.PositionName</td>
                 <td>
                     <a href="/Employees/Edit/@employee.EmployeeId" class="edit-link"><i class="fa fa-pencil"></i></a>
                     <a href="/Employees/Delete/@employee.EmployeeId" class="delete-link"><i class="fa fa-trash-o"></i></a>

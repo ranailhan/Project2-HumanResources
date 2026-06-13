@@ -31,9 +31,9 @@ namespace HumanResourcesDBFirst.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Leaf leaf)
+        public IActionResult Create(Leave leave)
         {
-            _context.Leaves.Add(leaf);
+            _context.Leaves.Add(leave);
             _context.SaveChanges();
             ViewBag.Employees = _context.Employees.ToList();
             ViewBag.LeaveTypes = _context.LeaveTypes.ToList();
@@ -50,9 +50,9 @@ namespace HumanResourcesDBFirst.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(Leaf leaf)
+        public IActionResult Edit(Leave leave)
         {
-            _context.Leaves.Update(leaf);
+            _context.Leaves.Update(leave);
             _context.SaveChanges();
             ViewBag.Employees = _context.Employees.ToList();
             ViewBag.LeaveTypes = _context.LeaveTypes.ToList();
@@ -71,9 +71,9 @@ namespace HumanResourcesDBFirst.Controllers
         }
 
         [HttpPost]
-        public IActionResult Delete(Leaf leaf)
+        public IActionResult Delete(Leave leave)
         {
-            _context.Leaves.Remove(leaf);
+            _context.Leaves.Remove(leave);
             _context.SaveChanges();
             return RedirectToAction("Index");
         }

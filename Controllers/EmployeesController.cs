@@ -16,9 +16,10 @@ namespace HumanResourcesDBFirst.Controllers
         public IActionResult Index()
         {
             var results = _context.Employees
-                .Include(x=>x.Department)
-                .Include(x=>x.Position)
-                .ToList();
+        .Include(x => x.Department)
+        .Include(x => x.Position)
+        .Where(x => x.IsDeleted == false || x.IsDeleted == null) 
+        .ToList();
             return View(results);
         }
 
@@ -49,8 +50,6 @@ namespace HumanResourcesDBFirst.Controllers
         [HttpPost]
         public IActionResult Edit(Employee employee)
         {
-            ViewBag.Departments = _context.Departments.ToList();
-            ViewBag.Positions = _context.Positions.ToList();
             _context.Employees.Update(employee);
             _context.SaveChanges();
             return RedirectToAction("Index");
@@ -60,13 +59,16 @@ namespace HumanResourcesDBFirst.Controllers
         public IActionResult Delete(int id)
         {
             var employee = _context.Employees.Find(id);
+            ViewBag.Departments = _context.Departments.ToList();
+            ViewBag.Positions = _context.Positions.ToList();
             return View(employee);
         }
 
         [HttpPost]
         public IActionResult Delete(Employee employee)
         {
-            _context.Employees.Remove(employee);
+            employee.IsDeleted = true;
+            _context.Employees.Update(employee);
             _context.SaveChanges();
             return RedirectToAction("Index");
         }

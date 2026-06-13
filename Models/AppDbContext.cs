@@ -19,7 +19,7 @@ public partial class AppDbContext : DbContext
 
     public virtual DbSet<Employee> Employees { get; set; }
 
-    public virtual DbSet<Leaf> Leaves { get; set; }
+    public virtual DbSet<Leave> Leaves { get; set; }
 
     public virtual DbSet<LeaveType> LeaveTypes { get; set; }
 
@@ -46,6 +46,7 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.FirstName)
                 .HasMaxLength(50)
                 .IsUnicode(false);
+            entity.Property(e => e.IsDeleted).HasDefaultValue(false);
             entity.Property(e => e.LastName)
                 .HasMaxLength(50)
                 .IsUnicode(false);
@@ -61,7 +62,7 @@ public partial class AppDbContext : DbContext
                 .HasConstraintName("FK_Employees_Positions");
         });
 
-        modelBuilder.Entity<Leaf>(entity =>
+        modelBuilder.Entity<Leave>(entity =>
         {
             entity.HasKey(e => e.LeaveId);
 

@@ -9,5 +9,5 @@ public partial class LeaveType
 
     public string? LeaveTypeName { get; set; }
 
-    public virtual ICollection<Leaf> Leaves { get; set; } = new List<Leaf>();
+    public virtual ICollection<Leave> Leaves { get; set; } = new List<Leave>();
 }

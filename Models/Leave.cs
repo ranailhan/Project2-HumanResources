@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace HumanResourcesDBFirst.Models;
 
-public partial class Leaf
+public partial class Leave
 {
     public int LeaveId { get; set; }
 
