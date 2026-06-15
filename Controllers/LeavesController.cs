@@ -13,13 +13,37 @@ namespace HumanResourcesDBFirst.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string search, string searchField)
         {
-            var results = _context.Leaves
+            var query = _context.Leaves
                 .Include(x => x.Employee)
+                .Where(x => x.Employee.IsDeleted != true)
                 .Include(x => x.LeaveType)
-                .ToList();
-            return View(results);
+                .AsQueryable();
+            if (!string.IsNullOrEmpty(search))
+            {
+                query = searchField switch
+                {
+                    "id" => query.Where(x => x.LeaveId.ToString().Contains(search)),
+                    "name" => query.Where(x => x.Employee.FirstName.ToString().Contains(search) || x.Employee.LastName.ToString().Contains(search)),
+                    "leaveType" => query.Where(x => x.LeaveType.LeaveTypeName.ToString().Contains(search)),
+                    "startDate" => query.Where(x => x.StartDate.ToString().Contains(search)),
+                    "endDate" => query.Where(x => x.EndDate.ToString().Contains(search)),
+                    "reason" => query.Where(x => x.Reason.ToString().Contains(search)),
+                    "status" => query.Where(x => x.Status.ToString().Contains(search)),
+                    _ => query.Where(x => x.LeaveId.ToString().Contains(search) ||
+                    x.Employee.FirstName.ToString().Contains(search) ||
+                    x.Employee.LastName.ToString().Contains(search) ||
+                    x.LeaveType.LeaveTypeName.ToString().Contains(search) ||
+                    x.StartDate.ToString().Contains(search) ||
+                    x.EndDate.ToString().Contains(search) ||
+                    x.Reason.ToString().Contains(search) ||
+                    x.Status.ToString().Contains(search))
+                };
+            }
+
+            return View(query.ToList());
+
         }
 
         [HttpGet]

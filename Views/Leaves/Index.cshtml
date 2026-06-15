@@ -8,7 +8,32 @@
 <br />
 
 <div class="d-flex justify-content-start align-items-center mb-3 gap-2">
+    <div class="search-field d-none d-md-block">
+        <form class="d-flex align-items-center h-100 gap-2" action="/Leaves/Index" method="get">
+            <select name="searchField" class="form-select form-select-sm" style="width: auto;">
+                <option value="">Filtreli Ara</option>
+                <option value="id">İzin ID</option>
+                <option value="name">Çalışan Adı</option>
+                <option value="leaveType">İzin Türü</option>
+                <option value="startDate">Başlangıç Tarihi</option>
+                <option value="endDate">Bitiş Tarihi</option>
+                <option value="reason">Sebep</option>
+                <option value="status">Durum</option>
+            </select>
+
+            <div class="input-group input-group-sm">
+                <span class="input-group-text border-0 bg-transparent">
+                    <i class="mdi mdi-magnify"></i>
+                </span>
+                <input type="text" name="search" class="form-control bg-transparent border-0"
+                       placeholder="Ara...">
+            </div>
+
+            <button type="submit" class="btn btn-sm btn-primary">Ara</button>
+        </form>
+    </div>
     <a href="/Leaves/Create" class="btn btn-gradient-primary btn-icon-text">Yeni İzin Ekle</a>
+    <a href="/Leaves/Index" class="btn btn-gradient-info btn-icon-text"> Listele </a>
 </div>
 
 <div class="table-responsive">

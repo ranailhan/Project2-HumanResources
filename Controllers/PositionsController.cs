@@ -12,10 +12,23 @@ namespace HumanResourcesDBFirst.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string search, string searchField)
         {
-            var results = _context.Positions.ToList();
-            return View(results);
+            var query = _context.Positions.AsQueryable();
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                query = searchField switch
+                {
+                    "id" => query.Where(x => x.PositionId.ToString().Contains(search)),
+                    "name" => query.Where(x => x.PositionName.ToString().Contains(search)),
+                    "plevel" => query.Where(x => x.PositionLevel.ToString().Contains(search)),
+                    _ => query.Where(x => x.PositionId.ToString().Contains(search) ||
+                    x.PositionName.ToString().Contains(search) ||
+                    x.PositionLevel.ToString().Contains(search))
+                };
+            }
+            return View(query.ToList());
         }
 
         [HttpGet]

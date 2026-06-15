@@ -6,6 +6,32 @@
 <h4 class="card-title">Çalışan Listesi</h4>
 <br />
 <div class="d-flex justify-content-start align-items-center mb-3 gap-2">
+    <div class="search-field d-none d-md-block">
+        <form class="d-flex align-items-center h-100 gap-2" action="/Employees/Index" method="get">
+            <select name="searchField" class="form-select form-select-sm" style="width: auto;">
+                <option value="">Filtreli Ara</option>
+                <option value="id">Çalışan ID</option>
+                <option value="name">Ad</option>
+                <option value="surname">Soyad</option>
+                <option value="mail">Mail</option>
+                <option value="number">Telefon</option>
+                <option value="hireDate">İşe Giriş Tarihi</option>
+                <option value="salary">Maaş</option>
+                <option value="department">Departman</option>
+                <option value="position">Pozisyon</option>
+            </select>
+
+            <div class="input-group input-group-sm">
+                <span class="input-group-text border-0 bg-transparent">
+                    <i class="mdi mdi-magnify"></i>
+                </span>
+                <input type="text" name="search" class="form-control bg-transparent border-0"
+                       placeholder="Ara...">
+            </div>
+
+            <button type="submit" class="btn btn-sm btn-primary">Ara</button>
+        </form>
+    </div>
     <a href="/Employees/Create" class="btn btn-gradient-primary btn-icon-text"> Yeni Çalışan Ekle </a>
     <a href="/Employees/Index" class="btn btn-gradient-info btn-icon-text"> Listele </a>
 </div>

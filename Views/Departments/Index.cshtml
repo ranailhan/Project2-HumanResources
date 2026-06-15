@@ -5,6 +5,26 @@
 }
 <h4 class="card-title">Departmanlar Listesi</h4><br />
 <div class="d-flex justify-content-start align-items-center mb-3 gap-2">
+    <div class="search-field d-none d-md-block">
+        <form class="d-flex align-items-center h-100 gap-2" action="/Departments/Index" method="get">
+            <select name="searchField" class="form-select form-select-sm" style="width: auto;">
+                <option value="">Filtreli Ara</option>
+                <option value="id">Departman ID</option>
+                <option value="name">Departman Adı</option>
+                <option value="description">Açıklama</option>
+            </select>
+
+            <div class="input-group input-group-sm">
+                <span class="input-group-text border-0 bg-transparent">
+                    <i class="mdi mdi-magnify"></i>
+                </span>
+                <input type="text" name="search" class="form-control bg-transparent border-0"
+                       placeholder="Ara...">
+            </div>
+
+            <button type="submit" class="btn btn-sm btn-primary">Ara</button>
+        </form>
+    </div>
     <a href="/Departments/Create" class="btn btn-gradient-primary btn-icon-text">Yeni Departman Ekle</a>
     <a href="/Departments/Index" class="btn btn-gradient-info btn-icon-text">Listele </a>
 </div>
