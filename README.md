@@ -31,11 +31,6 @@
   <img src="HumanResourcesScreenshots/Raporlar.png" width="850" alt="Reports and Analytics" />
 </p>
 
-### 📝 İzin Talepleri Listesi (Yönetici Arayüzü)
-<p align="center">
-  <img src="HumanResourcesScreenshots/izintaleplistesi.png" width="850" alt="Leave Requests List" />
-</p>
-
 ### ⚙️ İzin Talebi Detaylı İnceleme
 <p align="center">
   <img src="HumanResourcesScreenshots/AdminIzin.png" width="850" alt="Leave Detail Review" />
