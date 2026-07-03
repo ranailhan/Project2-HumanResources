@@ -1,9 +1,11 @@
-﻿using HumanResourcesDBFirst.Models;
+using HumanResourcesDBFirst.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HumanResourcesDBFirst.Controllers
 {
+    [Authorize]
     public class LeavesController : Controller
     {
         private readonly AppDbContext _context;
@@ -99,6 +101,30 @@ namespace HumanResourcesDBFirst.Controllers
         {
             _context.Leaves.Remove(leave);
             _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult Approve(int id)
+        {
+            var leave = _context.Leaves.Find(id);
+            if (leave != null)
+            {
+                leave.Status = "Approved";
+                _context.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult Reject(int id)
+        {
+            var leave = _context.Leaves.Find(id);
+            if (leave != null)
+            {
+                leave.Status = "Rejected";
+                _context.SaveChanges();
+            }
             return RedirectToAction("Index");
         }
     }

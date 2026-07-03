@@ -1,0 +1,121 @@
+@model Employee
+@{
+    ViewData["Title"] = "Panelim";
+    Layout = "~/Views/Shared/_EmployeeLayout.cshtml";
+}
+
+<div class="page-header">
+    <h3 class="page-title">
+        <span class="page-title-icon bg-gradient-primary text-white me-2">
+            <i class="mdi mdi-home"></i>
+        </span> Çalışan Portalı
+    </h3>
+    <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">
+                <span>Profilim ve Özet Bilgiler</span>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+<!-- İstatistik Kartları -->
+<div class="row">
+    <div class="col-md-3 stretch-card grid-margin">
+        <div class="card bg-gradient-primary card-img-holder text-white shadow-sm">
+            <div class="card-body">
+                <h4 class="font-weight-normal mb-3">
+                    Toplam İzin Talebi <i class="mdi mdi-calendar mdi-24px float-end"></i>
+                </h4>
+                <h2 class="mb-3">@ViewBag.TotalLeaves</h2>
+                <h6 class="card-text">Toplam gönderilen izin sayısı</h6>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 stretch-card grid-margin">
+        <div class="card bg-gradient-success card-img-holder text-white shadow-sm">
+            <div class="card-body">
+                <h4 class="font-weight-normal mb-3">
+                    Onaylanan İzinler <i class="mdi mdi-calendar-check mdi-24px float-end"></i>
+                </h4>
+                <h2 class="mb-3">@ViewBag.ApprovedLeaves</h2>
+                <h6 class="card-text">Kullanılan veya onaylanan izinler</h6>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 stretch-card grid-margin">
+        <div class="card bg-gradient-warning card-img-holder text-white shadow-sm">
+            <div class="card-body">
+                <h4 class="font-weight-normal mb-3">
+                    Bekleyen Talepler <i class="mdi mdi-clock-outline mdi-24px float-end"></i>
+                </h4>
+                <h2 class="mb-3">@ViewBag.PendingLeaves</h2>
+                <h6 class="card-text">Onay bekleyen izin talepleri</h6>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 stretch-card grid-margin">
+        <div class="card bg-gradient-danger card-img-holder text-white shadow-sm">
+            <div class="card-body">
+                <h4 class="font-weight-normal mb-3">
+                    Reddedilenler <i class="mdi mdi-calendar-remove mdi-24px float-end"></i>
+                </h4>
+                <h2 class="mb-3">@ViewBag.RejectedLeaves</h2>
+                <h6 class="card-text">Reddedilen izin talepleri</h6>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Profil Kartı -->
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <h4 class="card-title text-primary mb-4"><i class="mdi mdi-account-card-details"></i> Profil Bilgilerim</h4>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <table class="table table-borderless table-responsive">
+                            <tbody>
+                                <tr>
+                                    <td class="font-weight-bold text-muted" style="width: 180px;">Adı Soyadı:</td>
+                                    <td><strong>@Model.FirstName @Model.LastName</strong></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-weight-bold text-muted">E-posta Adresi:</td>
+                                    <td>@Model.Email</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-weight-bold text-muted">Telefon Numarası:</td>
+                                    <td>@Model.Phone</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-6">
+                        <table class="table table-borderless table-responsive">
+                            <tbody>
+                                <tr>
+                                    <td class="font-weight-bold text-muted" style="width: 180px;">Departman:</td>
+                                    <td><span class="badge bg-light text-dark font-weight-bold p-2">@Model.Department?.DepartmentName</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-weight-bold text-muted">Pozisyon:</td>
+                                    <td>@Model.Position?.PositionName</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-weight-bold text-muted">İşe Giriş Tarihi:</td>
+                                    <td>@Model.HireDate?.ToString("dd.MM.yyyy")</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

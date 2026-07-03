@@ -1,0 +1,70 @@
+@model WishSuggestion
+@{
+    ViewData["Title"] = "Cevapla";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-header">
+    <h3 class="page-title">
+        <span class="page-title-icon bg-gradient-primary text-white me-2">
+            <i class="mdi mdi-comment-account-outline"></i>
+        </span> Öneriyi Cevapla
+    </h3>
+    <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/AdminSuggestions/Index">Dilek & İstekler</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Cevapla</li>
+        </ul>
+    </nav>
+</div>
+
+<div class="row">
+    <div class="col-md-8 mx-auto grid-margin stretch-card">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <h4 class="card-title text-primary mb-4"><i class="mdi mdi-account"></i> Çalışan Bildirimi Detayları</h4>
+                
+                <div class="bg-light p-4 rounded mb-4 border">
+                    <div class="row mb-2">
+                        <div class="col-sm-3 font-weight-bold text-muted">Çalışan:</div>
+                        <div class="col-sm-9">
+                            <strong>@(Model.Employee?.FirstName + " " + Model.Employee?.LastName)</strong> 
+                            <span class="text-secondary text-small">(@(Model.Employee?.Email))</span>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-sm-3 font-weight-bold text-muted">Tarih:</div>
+                        <div class="col-sm-9">@Model.SubmittedAt.ToString("dd.MM.yyyy HH:mm")</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-sm-3 font-weight-bold text-muted">Konu / Başlık:</div>
+                        <div class="col-sm-9"><strong>@Model.Title</strong></div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-12 font-weight-bold text-muted mb-2">Dilek / İstek Mesajı:</div>
+                        <div class="col-12 text-secondary" style="white-space: pre-wrap; font-size: 1rem; line-height: 1.5;">@Model.Content</div>
+                    </div>
+                </div>
+
+                <h4 class="card-title text-primary mb-3"><i class="mdi mdi-reply"></i> Yanıtınız</h4>
+                
+                <form class="forms-sample" asp-action="Reply" asp-controller="AdminSuggestions" method="post">
+                    <input type="hidden" name="id" value="@Model.Id" />
+                    
+                    <div class="form-group mb-4">
+                        <label for="adminReply" class="form-label text-muted">Cevap Yazın</label>
+                        <textarea name="adminReply" class="form-control border-primary-subtle" rows="6" placeholder="Çalışana iletilecek yanıtı buraya girin..." required>@Model.AdminReply</textarea>
+                    </div>
+
+                    <div class="d-flex justify-content-end gap-2">
+                        <a href="/AdminSuggestions/Index" class="btn btn-light">Vazgeç</a>
+                        <button type="submit" class="btn btn-gradient-primary btn-icon-text">
+                            <i class="mdi mdi-send btn-icon-prepend"></i> Yanıtı Gönder
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

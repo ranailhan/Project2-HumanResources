@@ -1,13 +1,14 @@
-﻿using HumanResourcesDBFirst.Models;
+using HumanResourcesDBFirst.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HumanResourcesDBFirst.Controllers
 {
+    [Authorize]
     public class EmployeesController : Controller
     {
         private readonly AppDbContext _context;
-        //TODO: Employee silinince fkdan patlıyor. Soft delete yapılabilir.
         public EmployeesController(AppDbContext context)
         {
             _context = context;

@@ -1,0 +1,91 @@
+@model ICollection<Leave>
+@{
+    ViewData["Title"] = "İzinlerim";
+    Layout = "~/Views/Shared/_EmployeeLayout.cshtml";
+}
+
+<div class="page-header">
+    <h3 class="page-title">
+        <span class="page-title-icon bg-gradient-primary text-white me-2">
+            <i class="mdi mdi-calendar-check"></i>
+        </span> İzin Taleplerim
+    </h3>
+    <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">
+                <span>Geçmiş ve Aktif İzinlerim</span>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+<div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h4 class="card-title">Taleplerim Listesi</h4>
+                    <div class="gap-2 d-flex">
+                        <a href="/EmployeePanel/CreateLeave" class="btn btn-sm btn-gradient-primary btn-icon-text">
+                            <i class="mdi mdi-calendar-plus btn-icon-prepend"></i> Yeni İzin Talebi
+                        </a>
+                        <button onclick="exportTableToExcel('myLeavesTable', 'Izin_Taleplerim')" class="btn btn-sm btn-gradient-success btn-icon-text">
+                            <i class="mdi mdi-file-excel btn-icon-prepend"></i> Excel İndir
+                        </button>
+                        <button onclick="exportTableToPDF('myLeavesTable', 'Izin_Taleplerim', 'İzin Taleplerim')" class="btn btn-sm btn-gradient-danger btn-icon-text">
+                            <i class="mdi mdi-file-pdf btn-icon-prepend"></i> PDF İndir
+                        </button>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped" id="myLeavesTable">
+                        <thead>
+                            <tr>
+                                <th> İzin Türü </th>
+                                <th> Başlangıç Tarihi </th>
+                                <th> Bitiş Tarihi </th>
+                                <th> Sebep / Açıklama </th>
+                                <th> Durum </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var leave in Model)
+                            {
+                                <tr>
+                                    <td><strong>@leave.LeaveType?.LeaveTypeName</strong></td>
+                                    <td>@leave.StartDate?.ToString("dd.MM.yyyy")</td>
+                                    <td>@leave.EndDate?.ToString("dd.MM.yyyy")</td>
+                                    <td>@(string.IsNullOrEmpty(leave.Reason) ? "-" : leave.Reason)</td>
+                                    <td>
+                                        @if (leave.Status == "Approved")
+                                        {
+                                            <span class="badge badge-gradient-success">Onaylandı</span>
+                                        }
+                                        else if (leave.Status == "Pending")
+                                        {
+                                            <span class="badge badge-gradient-warning">Beklemede</span>
+                                        }
+                                        else if (leave.Status == "Rejected")
+                                        {
+                                            <span class="badge badge-gradient-danger">Reddedildi</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge badge-gradient-info">@leave.Status</span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                            @if (Model.Count == 0)
+                            {
+                                <tr>
+                                    <td colspan="5" class="text-center text-muted py-4">Henüz bir izin talebi kaydınız bulunmuyor.</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,110 @@
+@model ReportsViewModel
+@{
+    ViewData["Title"] = "Raporlar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-header">
+    <h3 class="page-title">
+        <span class="page-title-icon bg-gradient-primary text-white me-2">
+            <i class="mdi mdi-chart-line"></i>
+        </span> Raporlar ve Analizler
+    </h3>
+    <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">
+                <span>İK Analiz Ekranı</span>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+<div class="row">
+    <!-- Departman İstatistikleri -->
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h4 class="card-title">Departman Bazlı Analiz</h4>
+                    <div class="btn-group gap-2" role="group">
+                        <button onclick="exportTableToExcel('deptTable', 'Departman_Analiz_Raporu')" class="btn btn-sm btn-gradient-success btn-icon-text">
+                            <i class="mdi mdi-file-excel btn-icon-prepend"></i> Excel İndir
+                        </button>
+                        <button onclick="exportTableToPDF('deptTable', 'Departman_Analiz_Raporu', 'Departman Bazlı Analiz')" class="btn btn-sm btn-gradient-danger btn-icon-text">
+                            <i class="mdi mdi-file-pdf btn-icon-prepend"></i> PDF İndir
+                        </button>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped" id="deptTable">
+                        <thead>
+                            <tr class="bg-light">
+                                <th> Departman Adı </th>
+                                <th> Çalışan Sayısı </th>
+                                <th> Ortalama Maaş </th>
+                                <th> Toplam Maaş Gideri </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var stat in Model.DepartmentStats)
+                            {
+                                <tr>
+                                    <td><strong>@stat.DepartmentName</strong></td>
+                                    <td>@stat.EmployeeCount</td>
+                                    <td>@stat.AverageSalary.ToString("C2")</td>
+                                    <td>@stat.TotalSalary.ToString("C2")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Detaylı Çalışan Listesi Raporu -->
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h4 class="card-title">Detaylı Çalışan Raporu</h4>
+                    <div class="btn-group gap-2" role="group">
+                        <button onclick="exportTableToExcel('empTable', 'Calisan_Detay_Raporu')" class="btn btn-sm btn-gradient-success btn-icon-text">
+                            <i class="mdi mdi-file-excel btn-icon-prepend"></i> Excel İndir
+                        </button>
+                        <button onclick="exportTableToPDF('empTable', 'Calisan_Detay_Raporu', 'Detaylı Çalışan Raporu')" class="btn btn-sm btn-gradient-danger btn-icon-text">
+                            <i class="mdi mdi-file-pdf btn-icon-prepend"></i> PDF İndir
+                        </button>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped" id="empTable">
+                        <thead>
+                            <tr class="table-primary">
+                                <th> ID </th>
+                                <th> Çalışan Ad Soyad </th>
+                                <th> Departman </th>
+                                <th> Pozisyon </th>
+                                <th> İşe Giriş Tarihi </th>
+                                <th> Maaş </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var emp in Model.EmployeeDetails)
+                            {
+                                <tr>
+                                    <td>@emp.EmployeeId</td>
+                                    <td><strong>@emp.FullName</strong></td>
+                                    <td>@emp.DepartmentName</td>
+                                    <td>@emp.PositionName</td>
+                                    <td>@emp.HireDate?.ToString("dd.MM.yyyy")</td>
+                                    <td>@emp.Salary.ToString("C2")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

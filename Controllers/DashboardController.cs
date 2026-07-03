@@ -1,9 +1,11 @@
-﻿using HumanResourcesDBFirst.Models;
+using HumanResourcesDBFirst.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HumanResourcesDBFirst.Controllers
 {
+    [Authorize]
     public class DashboardController : Controller
     {
         private readonly AppDbContext dbContext;

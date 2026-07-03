@@ -1,0 +1,135 @@
+@model ICollection<WishSuggestion>
+@{
+    ViewData["Title"] = "Dilek & İsteklerim";
+    Layout = "~/Views/Shared/_EmployeeLayout.cshtml";
+}
+
+<div class="page-header">
+    <h3 class="page-title">
+        <span class="page-title-icon bg-gradient-primary text-white me-2">
+            <i class="mdi mdi-comment-account-outline"></i>
+        </span> Dilek, İstek ve Önerilerim
+    </h3>
+    <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">
+                <span>Geri Bildirim Bildirimi</span>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+<div class="row">
+    <!-- Öneri Gönderim Formu -->
+    <div class="col-md-5 grid-margin stretch-card">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <h4 class="card-title text-primary mb-4">Yeni Dilek & İstek Bildir</h4>
+                
+                <form asp-action="Suggestions" asp-controller="EmployeePanel" method="post" class="forms-sample">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                    
+                    <div class="form-group mb-3">
+                        <label for="title" class="form-label text-muted">Konu / Başlık</label>
+                        <input type="text" name="title" class="form-control border-primary-subtle" placeholder="Örn: Yemekhane Menüsü, Esnek Çalışma Saatleri" required />
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label for="content" class="form-label text-muted">Açıklama / Mesajınız</label>
+                        <textarea name="content" class="form-control border-primary-subtle" rows="6" placeholder="Lütfen dilek, istek veya önerinizi detaylı bir şekilde açıklayın..." required></textarea>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-gradient-primary btn-icon-text">
+                            <i class="mdi mdi-send btn-icon-prepend"></i> Öneriyi Gönder
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Önceki Öneriler -->
+    <div class="col-md-7 grid-margin stretch-card">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h4 class="card-title text-primary"><i class="mdi mdi-history"></i> Önceki Bildirimlerim</h4>
+                    <div class="gap-1 d-flex">
+                        <button onclick="exportTableToExcel('suggestionsTable', 'Onerilerim')" class="btn btn-xs btn-gradient-success">
+                            Excel
+                        </button>
+                        <button onclick="exportTableToPDF('suggestionsTable', 'Onerilerim', 'Gönderdiğim Dilek ve İstekler')" class="btn btn-xs btn-gradient-danger">
+                            PDF
+                        </button>
+                    </div>
+                </div>
+
+                <div class="table-responsive" style="display: none;">
+                    <!-- Hidden table used for Excel/PDF exports of list data -->
+                    <table class="table" id="suggestionsTable">
+                        <thead>
+                            <tr>
+                                <th>Tarih</th>
+                                <th>Başlık</th>
+                                <th>İçerik</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var s in Model)
+                            {
+                                <tr>
+                                    <td>@s.SubmittedAt.ToString("dd.MM.yyyy HH:mm")</td>
+                                    <td>@s.Title</td>
+                                    <td>@s.Content</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="suggestion-timeline" style="max-height: 480px; overflow-y: auto; padding-right: 5px;">
+                    @foreach (var s in Model)
+                    {
+                        <div class="card border-primary-subtle border mb-3 shadow-sm">
+                            <div class="card-body p-3">
+                                <div class="d-flex justify-content-between align-items-center mb-2 flex-wrap gap-1">
+                                    <h6 class="font-weight-bold text-dark mb-0">@s.Title</h6>
+                                    <div>
+                                        @if (s.Status == "Cevaplandı")
+                                        {
+                                            <span class="badge badge-gradient-success me-2" style="font-size: 0.75rem; padding: 3px 6px;">Cevaplandı</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge badge-gradient-warning me-2" style="font-size: 0.75rem; padding: 3px 6px;">Beklemede</span>
+                                        }
+                                        <small class="text-muted"><i class="mdi mdi-calendar"></i> @s.SubmittedAt.ToString("dd.MM.yyyy HH:mm")</small>
+                                    </div>
+                                </div>
+                                <p class="text-secondary mb-0" style="white-space: pre-line;">@s.Content</p>
+                                
+                                @if (!string.IsNullOrEmpty(s.AdminReply))
+                                {
+                                    <div class="mt-3 bg-light p-3 rounded border border-primary-subtle" style="font-size: 0.9rem;">
+                                        <div class="text-primary font-weight-bold mb-1">
+                                            <i class="mdi mdi-reply"></i> Yönetici Yanıtı:
+                                        </div>
+                                        <p class="text-dark mb-0" style="white-space: pre-line;">@s.AdminReply</p>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                    @if (Model.Count == 0)
+                    {
+                        <div class="text-center text-muted py-5">
+                            <i class="mdi mdi-comment-question-outline d-block fs-1 mb-2 text-primary-subtle"></i>
+                            Henüz bir dilek veya istek bildiriminiz bulunmuyor.
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

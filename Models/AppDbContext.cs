@@ -1,10 +1,12 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace HumanResourcesDBFirst.Models;
 
-public partial class AppDbContext : DbContext
+public partial class AppDbContext : IdentityDbContext<IdentityUser>
 {
     public AppDbContext()
     {
@@ -25,11 +27,14 @@ public partial class AppDbContext : DbContext
 
     public virtual DbSet<Position> Positions { get; set; }
 
+    public virtual DbSet<WishSuggestion> WishSuggestions { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseSqlServer("Name=Default");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
         modelBuilder.Entity<Department>(entity =>
         {
             entity.Property(e => e.DepartmentName)
@@ -94,6 +99,18 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.PositionName)
                 .HasMaxLength(50)
                 .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<WishSuggestion>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.Title).HasMaxLength(150);
+            entity.Property(e => e.Content).HasMaxLength(1000);
+            entity.Property(e => e.Status).HasMaxLength(50).HasDefaultValue("Beklemede");
+            entity.Property(e => e.AdminReply).HasMaxLength(1000);
+            entity.HasOne(d => d.Employee).WithMany()
+                .HasForeignKey(d => d.EmployeeId)
+                .HasConstraintName("FK_WishSuggestions_Employees");
         });
 
         OnModelCreatingPartial(modelBuilder);

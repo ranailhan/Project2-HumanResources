@@ -1,8 +1,10 @@
-﻿using HumanResourcesDBFirst.Models;
+using HumanResourcesDBFirst.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HumanResourcesDBFirst.Controllers
 {
+    [Authorize]
     public class DepartmentsController : Controller
     {
         private readonly AppDbContext _context;

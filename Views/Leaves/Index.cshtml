@@ -1,4 +1,4 @@
-﻿@model ICollection<Leave>
+@model ICollection<Leave>
 @{
     ViewData["Title"] = "İzin Listesi";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -34,10 +34,16 @@
     </div>
     <a href="/Leaves/Create" class="btn btn-gradient-primary btn-icon-text">Yeni İzin Ekle</a>
     <a href="/Leaves/Index" class="btn btn-gradient-info btn-icon-text"> Listele </a>
+    <button onclick="exportTableToExcel('leavesTable', 'Izinler_Listesi')" class="btn btn-gradient-success btn-icon-text">
+        <i class="mdi mdi-file-excel btn-icon-prepend"></i> Excel
+    </button>
+    <button onclick="exportTableToPDF('leavesTable', 'Izinler_Listesi', 'İzinler Listesi')" class="btn btn-gradient-danger btn-icon-text">
+        <i class="mdi mdi-file-pdf btn-icon-prepend"></i> PDF
+    </button>
 </div>
 
 <div class="table-responsive">
-    <table class="table table-striped">
+    <table class="table table-striped" id="leavesTable">
         <thead>
             <tr>
                 <th>Çalışan Adı</th>
@@ -77,10 +83,19 @@
                         }
                     </td>
                     <td>
-                        <a href="/Leaves/Edit/@leaf.LeaveId" class="btn btn-sm btn-gradient-warning">
+                        @if (leaf.Status == "Pending")
+                        {
+                            <a href="/Leaves/Approve/@leaf.LeaveId" class="btn btn-sm btn-gradient-success" title="Onayla" style="padding: 5px 10px;">
+                                <i class="mdi mdi-check"></i>
+                            </a>
+                            <a href="/Leaves/Reject/@leaf.LeaveId" class="btn btn-sm btn-gradient-danger" title="Reddet" style="padding: 5px 10px;">
+                                <i class="mdi mdi-close"></i>
+                            </a>
+                        }
+                        <a href="/Leaves/Edit/@leaf.LeaveId" class="btn btn-sm btn-gradient-warning" title="Düzenle" style="padding: 5px 10px;">
                             <i class="mdi mdi-pencil"></i>
                         </a>
-                        <a href="/Leaves/Delete/@leaf.LeaveId" class="btn btn-sm btn-gradient-danger">
+                        <a href="/Leaves/Delete/@leaf.LeaveId" class="btn btn-sm btn-gradient-danger" title="Sil" style="padding: 5px 10px;">
                             <i class="mdi mdi-delete"></i>
                         </a>
                     </td>
